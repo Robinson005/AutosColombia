@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Autos Colombia - Gestión Parqueadero</title>
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+<header>Autos Colombia - Gestion Parqueadero</header>
+<nav>
+  <button id="tab-users" class="active">Usuarios</button>
+  <button id="tab-cells">Celdas</button>
+  <button id="tab-vehicles">Entrada/Salida</button>
+  <button id="tab-novelties">Novedades</button>
+  <button id="tab-payments">Pagos</button>
+</nav>
+<main>
+  <!-- Users Management -->
+  <section id="section-users" class="tab-section">
+    <h2>Gestión de Usuarios</h2>
+    <form id="user-form">
+      <label for="user-name">Nombre completo</label>
+      <input type="text" id="user-name" placeholder="Ej: Juan Pérez" required />
+      <label for="user-id">Identificación</label>
+      <input type="text" id="user-id" placeholder="Número de cédula" required />
+      <button class="primary" type="submit">Registrar Usuario</button>
+    </form>
+    <div>
+      <h3>Usuarios Registrados</h3>
+      <div class="scrollable">
+        <table id="users-table" aria-label="Usuarios registrados">
+          <thead>
+            <tr><th>Nombre</th><th>ID</th><th>Acción</th></tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cells Management -->
+  <section id="section-cells" class="tab-section" style="display:none;">
+    <h2>Gestión de Celdas</h2>
+    <form id="cell-form">
+      <label for="cell-code">Código de Celda</label>
+      <input type="text" id="cell-code" placeholder="Ej: A1" required />
+      <label for="cell-description">Descripción</label>
+      <input type="text" id="cell-description" placeholder="Ej: Celda cerca entrada" />
+      <button class="primary" type="submit">Registrar Celda</button>
+    </form>
+    <div>
+      <h3>Celdas Registradas</h3>
+      <div class="scrollable">
+        <table id="cells-table" aria-label="Celdas registradas">
+          <thead><tr><th>Código</th><th>Descripción</th><th>Estado</th><th>Acción</th></tr></thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vehicle Entry/Exit -->
+  <section id="section-vehicles" class="tab-section" style="display:none;">
+    <h2>Entrada y Salida de Vehículos</h2>
+    <form id="vehicle-entry-form">
+      <label for="vehicle-plate">Placa del vehículo</label>
+      <input type="text" id="vehicle-plate" placeholder="Ej: XYZ123" required />
+      <label for="vehicle-user">Usuario (ID)</label>
+      <select id="vehicle-user" required>
+        <option value="">Seleccione un usuario</option>
+      </select>
+      <label for="vehicle-cell">Celda asignada</label>
+      <select id="vehicle-cell" required>
+        <option value="">Seleccione una celda</option>
+      </select>
+      <button class="primary" type="submit">Registrar Entrada</button>
+    </form>
+
+    <div>
+      <h3>Vehículos en Parqueadero</h3>
+      <div class="scrollable">
+        <table id="vehicles-table" aria-label="Vehículos actualmente en parqueadero">
+          <thead><tr><th>Placa</th><th>Usuario</th><th>Celda</th><th>Hora Entrada</th><th>Acción</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div style="margin-top:1rem;">
+      <h3>Registrar Salida Vehículo</h3>
+      <form id="vehicle-exit-form">
+        <label for="exit-vehicle-plate">Seleccionar vehículo</label>
+        <select id="exit-vehicle-plate" required>
+          <option value="">Seleccione vehículo</option>
+        </select>
+        <button class="primary" type="submit">Registrar Salida</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Novelties -->
+  <section id="section-novelties" class="tab-section" style="display:none;">
+    <h2>Registro de Novedades</h2>
+    <form id="novelty-form">
+      <label for="novelty-vehicle">Placa del vehículo</label>
+      <select id="novelty-vehicle" required>
+        <option value="">Seleccione vehículo</option>
+      </select>
+      <label for="novelty-description">Descripción de la novedad</label>
+      <textarea id="novelty-description" placeholder="Describa la novedad" required></textarea>
+      <button class="primary" type="submit">Registrar Novedad</button>
+    </form>
+    <div>
+      <h3>Novedades Registradas</h3>
+      <div class="scrollable">
+        <table id="novelties-table" aria-label="Novedades registradas">
+          <thead><tr><th>Placa</th><th>Descripción</th><th>Hora</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Payments -->
+  <section id="section-payments" class="tab-section" style="display:none;">
+    <h2>Gestión de Pagos</h2>
+    <form id="payment-form">
+      <label for="payment-user">Usuario (ID)</label>
+      <select id="payment-user" required>
+        <option value="">Seleccione usuario</option>
+      </select>
+      <label for="payment-amount">Monto a pagar (COP)</label>
+      <input type="number" id="payment-amount" placeholder="Ej: 100000" min="1000" step="1000" required />
+      <button class="primary" type="submit">Registrar Pago</button>
+    </form>
+    <div>
+      <h3>Pagos Registrados</h3>
+      <div class="scrollable">
+        <table id="payments-table" aria-label="Pagos registrados">
+          <thead><tr><th>Usuario</th><th>Monto (COP)</th><th>Fecha</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  // Data storage (simulate backend)
+  const data = {
+    users: [],
+    cells: [],
+    vehicles: [],
+    novelties: [],
+    payments: []
+  };
+
+  // Utility for formatting date/time
+  function formatDate(date) {
+    return date.toLocaleString('es-CO', {dateStyle: 'short', timeStyle: 'short'});
+  }
+
+  // DOM elements - tabs
+  const tabs = {
+    users: document.getElementById('tab-users'),
+    cells: document.getElementById('tab-cells'),
+    vehicles: document.getElementById('tab-vehicles'),
+    novelties: document.getElementById('tab-novelties'),
+    payments: document.getElementById('tab-payments')
+  };
+  const sections = {
+    users: document.getElementById('section-users'),
+    cells: document.getElementById('section-cells'),
+    vehicles: document.getElementById('section-vehicles'),
+    novelties: document.getElementById('section-novelties'),
+    payments: document.getElementById('section-payments')
+  };
+
+  function showTab(key) {
+    Object.keys(tabs).forEach(k => {
+      if (k === key) {
+        tabs[k].classList.add('active');
+        sections[k].style.display = '';
+      } else {
+        tabs[k].classList.remove('active');
+        sections[k].style.display = 'none';
+      }
+    });
+    // Refresh selects on relevant tabs when switching for fresh data
+    if(key === 'vehicles') {
+      populateVehicleEntrySelects();
+      populateVehicleExitSelect();
+    } else if(key === 'novelties') {
+      populateNoveltyVehicleSelect();
+    } else if(key === 'payments') {
+      populatePaymentUserSelect();
+    }
+  }
+
+  // Event listeners for tabs
+  Object.entries(tabs).forEach(([key, btn]) => {
+    btn.addEventListener('click', () => showTab(key));
+  });
+
+  // Initial show users
+  showTab('users');
+
+  // USER MANAGEMENT
+  const userForm = document.getElementById('user-form');
+  const usersTableBody = document.querySelector('#users-table tbody');
+
+  userForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = userForm['user-name'].value.trim();
+    const id = userForm['user-id'].value.trim();
+    if(!name || !id) {
+      alert('Por favor, complete todos los campos para registrar un usuario.');
+      return;
+    }
+    if(data.users.find(u => u.id === id)) {
+      alert('Ya existe un usuario con esta identificación.');
+      return;
+    }
+    data.users.push({ id, name });
+    userForm.reset();
+    updateUsersTable();
+    updateVehicleUserSelect();
+    updatePaymentUserSelect();
+  });
+
+  function updateUsersTable() {
+    usersTableBody.innerHTML = '';
+    data.users.forEach(u => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${u.name}</td><td>${u.id}</td><td><button class="btn-danger" onclick="deleteUser('${u.id}')">Eliminar</button></td>`;
+      usersTableBody.appendChild(tr);
+    });
+  }
+  window.deleteUser = function(id) {
+    // Remove user only if no vehicle or payments assigned
+    if(data.vehicles.find(v => v.userId === id)) {
+      alert('No se puede eliminar un usuario con vehículos activos.');
+      return;
+    }
+    if(data.payments.find(p => p.userId === id)) {
+      alert('No se puede eliminar un usuario con pagos registrados.');
+      return;
+    }
+    data.users = data.users.filter(u => u.id !== id);
+    updateUsersTable();
+    updateVehicleUserSelect();
+    updatePaymentUserSelect();
+  };
+
+  // CELLS MANAGEMENT
+  const cellForm = document.getElementById('cell-form');
+  const cellsTableBody = document.querySelector('#cells-table tbody');
+
+  cellForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const code = cellForm['cell-code'].value.trim().toUpperCase();
+    const description = cellForm['cell-description'].value.trim();
+    if(!code) {
+      alert('Ingrese el código de la celda');
+      return;
+    }
+    if(data.cells.find(c => c.code === code)) {
+      alert('Ya existe una celda con ese código');
+      return;
+    }
+    data.cells.push({ code, description, occupied: false });
+    cellForm.reset();
+    updateCellsTable();
+    updateVehicleCellSelect();
+  });
+
+  function updateCellsTable() {
+    cellsTableBody.innerHTML = '';
+    data.cells.forEach(c => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${c.code}</td><td>${c.description || ''}</td><td>${c.occupied ? 'Ocupada' : 'Disponible'}</td><td><button class="btn-danger" onclick="deleteCell('${c.code}')">Eliminar</button></td>`;
+      cellsTableBody.appendChild(tr);
+    });
+  }
+  window.deleteCell = function(code) {
+    if(data.vehicles.find(v => v.cellCode === code)) {
+      alert('No se puede eliminar una celda con vehículo estacionado.');
+      return;
+    }
+    data.cells = data.cells.filter(c => c.code !== code);
+    updateCellsTable();
+    updateVehicleCellSelect();
+  };
+
+  // VEHICLE ENTRY/EXIT MANAGEMENT
+  const vehicleEntryForm = document.getElementById('vehicle-entry-form');
+  const vehicleUserSelect = document.getElementById('vehicle-user');
+  const vehicleCellSelect = document.getElementById('vehicle-cell');
+  const vehiclesTableBody = document.querySelector('#vehicles-table tbody');
+  const vehicleExitForm = document.getElementById('vehicle-exit-form');
+  const exitVehiclePlateSelect = document.getElementById('exit-vehicle-plate');
+
+  vehicleEntryForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const plate = vehicleEntryForm['vehicle-plate'].value.trim().toUpperCase();
+    const userId = vehicleEntryForm['vehicle-user'].value;
+    const cellCode = vehicleEntryForm['vehicle-cell'].value;
+    if(!plate || !userId || !cellCode) {
+      alert('Complete todos los campos para registrar la entrada del vehículo');
+      return;
+    }
+    if(data.vehicles.find(v => v.plate === plate)) {
+      alert('El vehículo ya está registrado dentro del parqueadero.');
+      return;
+    }
+    // Check if cell is available
+    const cell = data.cells.find(c => c.code === cellCode);
+    if(!cell) {
+      alert('Celda no encontrada');
+      return;
+    }
+    if(cell.occupied) {
+      alert('La celda seleccionada ya está ocupada.');
+      return;
+    }
+    cell.occupied = true;
+    const now = new Date();
+    data.vehicles.push({ plate, userId, cellCode, entryTime: now });
+    vehicleEntryForm.reset();
+    updateVehiclesTable();
+    updateVehicleExitSelect();
+    updateNoveltyVehicleSelect();
+    updateCellsTable();
+  });
+
+  function updateVehiclesTable() {
+    vehiclesTableBody.innerHTML = '';
+    data.vehicles.forEach(v => {
+      const user = data.users.find(u => u.id === v.userId);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${v.plate}</td><td>${user ? user.name : 'Desconocido'}</td><td>${v.cellCode}</td><td>${formatDate(new Date(v.entryTime))}</td><td><button class="btn-danger" onclick="registerVehicleExit('${v.plate}')">Salida</button></td>`;
+      vehiclesTableBody.appendChild(tr);
+    });
+  }
+  function populateVehicleEntrySelects() {
+    // Users
+    vehicleUserSelect.innerHTML = `<option value="">Seleccione un usuario</option>`;
+    data.users.forEach(u => {
+      vehicleUserSelect.innerHTML += `<option value="${u.id}">${u.name} (${u.id})</option>`;
+    });
+    // Cells available only
+    vehicleCellSelect.innerHTML = `<option value="">Seleccione una celda</option>`;
+    data.cells.filter(c => !c.occupied).forEach(c => {
+      vehicleCellSelect.innerHTML += `<option value="${c.code}">${c.code} - ${c.description || ''}</option>`;
+    });
+  }
+  function populateVehicleExitSelect() {
+    exitVehiclePlateSelect.innerHTML = `<option value="">Seleccione vehículo</option>`;
+    data.vehicles.forEach(v => {
+      exitVehiclePlateSelect.innerHTML += `<option value="${v.plate}">${v.plate}</option>`;
+    });
+  }
+
+  vehicleExitForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const plate = exitVehiclePlateSelect.value;
+    if(!plate) {
+      alert('Seleccione un vehículo para registrar la salida');
+      return;
+    }
+    registerVehicleExit(plate);
+    vehicleExitForm.reset();
+  });
+
+  window.registerVehicleExit = function(plate) {
+    const vehicleIndex = data.vehicles.findIndex(v => v.plate === plate);
+    if(vehicleIndex === -1) {
+      alert('Vehículo no encontrado en parqueadero');
+      return;
+    }
+    // Free the cell
+    const cellCode = data.vehicles[vehicleIndex].cellCode;
+    const cell = data.cells.find(c => c.code === cellCode);
+    if(cell) {
+      cell.occupied = false;
+    }
+    data.vehicles.splice(vehicleIndex, 1);
+    updateVehiclesTable();
+    updateVehicleExitSelect();
+    updateNoveltyVehicleSelect();
+    updateCellsTable();
+  };
+
+  // NOVELTY MANAGEMENT
+  const noveltyForm = document.getElementById('novelty-form');
+  const noveltyVehicleSelect = document.getElementById('novelty-vehicle');
+  const noveltiesTableBody = document.querySelector('#novelties-table tbody');
+
+  noveltyForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const plate = noveltyVehicleSelect.value;
+    const description = noveltyForm['novelty-description'].value.trim();
+    if(!plate || !description) {
+      alert('Complete todos los campos para registrar la novedad');
+      return;
+    }
+    const now = new Date();
+    data.novelties.push({ plate, description, time: now });
+    noveltyForm.reset();
+    updateNoveltiesTable();
+  });
+
+  function populateNoveltyVehicleSelect() {
+    noveltyVehicleSelect.innerHTML = `<option value="">Seleccione vehículo</option>`;
+    data.vehicles.forEach(v => {
+      noveltyVehicleSelect.innerHTML += `<option value="${v.plate}">${v.plate}</option>`;
+    });
+  }
+  function updateNoveltiesTable() {
+    noveltiesTableBody.innerHTML = '';
+    data.novelties.forEach(n => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${n.plate}</td><td>${n.description}</td><td>${formatDate(new Date(n.time))}</td>`;
+      noveltiesTableBody.appendChild(tr);
+    });
+  }
+
+  // PAYMENT MANAGEMENT
+  const paymentForm = document.getElementById('payment-form');
+  const paymentUserSelect = document.getElementById('payment-user');
+  const paymentsTableBody = document.querySelector('#payments-table tbody');
+
+  paymentForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const userId = paymentUserSelect.value;
+    const amount = Number(paymentForm['payment-amount'].value);
+    if(!userId || !amount || amount < 1000) {
+      alert('Seleccione usuario y escriba un monto válido (mínimo 1000 COP)');
+      return;
+    }
+    const now = new Date();
+    data.payments.push({ userId, amount, time: now });
+    paymentForm.reset();
+    updatePaymentsTable();
+  });
+
+  function populatePaymentUserSelect() {
+    paymentUserSelect.innerHTML = `<option value="">Seleccione usuario</option>`;
+    data.users.forEach(u => {
+      paymentUserSelect.innerHTML += `<option value="${u.id}">${u.name} (${u.id})</option>`;
+    });
+  }
+
+  function updatePaymentsTable() {
+    paymentsTableBody.innerHTML = '';
+    data.payments.forEach(p => {
+      const user = data.users.find(u => u.id === p.userId);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${user ? user.name : 'Desconocido'}</td><td>${p.amount.toLocaleString('es-CO', {style:'currency', currency:'COP'})}</td><td>${formatDate(new Date(p.time))}</td>`;
+      paymentsTableBody.appendChild(tr);
+    });
+  }
+
+  // Update all selects that depend on users or vehicles
+  function updateVehicleUserSelect() {
+    vehicleUserSelect.innerHTML = `<option value="">Seleccione un usuario</option>`;
+    data.users.forEach(u => {
+      vehicleUserSelect.innerHTML += `<option value="${u.id}">${u.name} (${u.id})</option>`;
+    });
+  }
+  function updateVehicleCellSelect() {
+    vehicleCellSelect.innerHTML = `<option value="">Seleccione una celda</option>`;
+    data.cells.filter(c => !c.occupied).forEach(c => {
+      vehicleCellSelect.innerHTML += `<option value="${c.code}">${c.code} - ${c.description || ''}</option>`;
+    });
+  }
+  function updateVehicleExitSelect() {
+    exitVehiclePlateSelect.innerHTML = `<option value="">Seleccione vehículo</option>`;
+    data.vehicles.forEach(v => {
+      exitVehiclePlateSelect.innerHTML += `<option value="${v.plate}">${v.plate}</option>`;
+    });
+  }
+  function updateNoveltyVehicleSelect() {
+    noveltyVehicleSelect.innerHTML = `<option value="">Seleccione vehículo</option>`;
+    data.vehicles.forEach(v => {
+      noveltyVehicleSelect.innerHTML += `<option value="${v.plate}">${v.plate}</option>`;
+    });
+  }
+  updateUsersTable();
+  updateCellsTable();
+  updateVehiclesTable();
+  updateNoveltiesTable();
+  updatePaymentsTable();
+
+</script>
+</body>
+</html>

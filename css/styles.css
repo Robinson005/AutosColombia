@@ -1,0 +1,182 @@
+/* Reset and base */
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #4a90e2 0%, #50e3c2 100%);
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  max-width: 350px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #ccc;
+}
+header {
+  width: 100%;
+  background: #fff;
+  color: #4a90e2;
+  font-weight: 700;
+  padding: 1rem 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  text-align: center;
+  font-size: 1.3rem;
+  user-select: none;
+}
+nav {
+  display: flex;
+  justify-content: space-around;
+  background: #fff;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index:10;
+}
+nav button {
+  flex: 1;
+  padding: 0.6rem 0;
+  border:none;
+  background: transparent;
+  font-weight: 600;
+  color: #4a90e2;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: 0.9rem;
+}
+nav button.active, nav button:hover {
+  background: #4a90e2;
+  color: white;
+}
+main {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  width: 100%;
+  background: white;
+  border-radius: 0 0 12px 12px;
+  max-height: 530px;
+}
+h2 {
+  color: #4a90e2;
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+  user-select: none;
+}
+label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+input[type=text], input[type=number], select, textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1.5px solid #4a90e2;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  outline-offset: 2px;
+  resize: vertical;
+}
+textarea {
+  min-height: 60px;
+}
+button.primary {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+button.primary:hover {
+  background-color: #357ABD;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+th, td {
+  border: 1px solid #4a90e2;
+  text-align: left;
+  padding: 0.35rem 0.5rem;
+  font-size: 0.85rem;
+}
+th {
+  background-color: #4a90e2;
+  color: white;
+}
+small {
+  font-size: 0.75rem;
+  color: #666;
+}
+.scrollable {
+  max-height: 250px;
+  overflow-y: auto;
+  border: 1px solid #4a90e2;
+  border-radius: 8px;
+}
+.btn-link {
+  background: none;
+  border:none;
+  color: #4a90e2;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding-left: 0;
+}
+.btn-danger {
+  background: #e94e4e;
+  color: white;
+  border-radius: 6px;
+  padding: 0.15rem 0.6rem;
+  font-weight: 700;
+}
+.flex-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.note {
+  font-style: italic;
+  color: #555;
+  font-size: 0.8rem;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+}
+/* Scrollbar style for better mobile UX */
+main::-webkit-scrollbar {
+  width: 6px;
+}
+main::-webkit-scrollbar-thumb {
+  background-color: #4a90e2;
+  border-radius: 3px;
+}
+/* Responsive tweaks */
+@media (max-width: 350px){
+  body {
+    border:none;
+    max-width: 100vw;
+  }
+  main {
+    max-height: 540px;
+    padding: 0.8rem;
+  }
+}
