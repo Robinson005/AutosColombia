@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pago al Retirar del Parqueadero - Autos Colombia</title>
+<style>
+  /* Base reset */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #4a90e2 0%, #50e3c2 100%);
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 2rem 1rem;
+    color: #333;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+  }
+  header {
+    width: 100%;
+    color: #4a90e2;
+    font-weight: 700;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    user-select: none;
+  }
+  form {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+  label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    margin-top: 1rem;
+  }
+  select {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1.5px solid #4a90e2;
+    border-radius: 8px;
+    outline-offset: 2px;
+  }
+  button.primary {
+    margin-top: 1.8rem;
+    width: 100%;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+  }
+  button.primary:hover {
+    background-color: #357ABD;
+  }
+  .message {
+    margin-top: 1rem;
+    font-weight: 600;
+    color: #357ABD;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+  <header>Pago al Retirar del Parqueadero</header>
+  <form id="paymentExitForm">
+    <label for="userSelect">Seleccione Usuario Registrado</label>
+    <select id="userSelect" required>
+      <option value="">-- Seleccione un usuario --</option>
+    </select>
+
+    <label for="paymentMethod">Seleccione Método de Pago</label>
+    <select id="paymentMethod" required>
+      <option value="">-- Seleccione un método --</option>
+      <option value="Nequi">Billeteras electrónicas - Nequi</option>
+      <option value="PayPal">Billeteras electrónicas - PayPal</option>
+      <option value="Daviplata">Billeteras electrónicas - Daviplata</option>
+      <option value="Pagos móviles">Pagos móviles</option>
+      <option value="Efectivo">Efectivo</option>
+      <option value="Tarjeta débito">Tarjetas de débito</option>
+      <option value="Tarjeta crédito">Tarjetas de crédito</option>
+    </select>
+
+    <button class="primary" type="submit">Realizar Pago y Salida</button>
+  </form>
+
+  <div id="confirmationMessage" class="message" role="alert" aria-live="polite"></div>
+
+  <script>
+    // Simulated registered users (in real app get from backend or main app data)
+    const users = [
+      { id: '1001', name: 'Juan Pérez' },
+      { id: '1002', name: 'María Gómez' },
+      { id: '1003', name: 'Carlos Rodríguez' }
+    ];
+
+    const userSelect = document.getElementById('userSelect');
+    const paymentMethodSelect = document.getElementById('paymentMethod');
+    const form = document.getElementById('paymentExitForm');
+    const confirmationMessage = document.getElementById('confirmationMessage');
+
+    // Populate user dropdown
+    function populateUsers() {
+      users.forEach(user => {
+        const option = document.createElement('option');
+        option.value = user.id;
+        option.textContent = `${user.name} (${user.id})`;
+        userSelect.appendChild(option);
+      });
+    }
+
+    populateUsers();
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const selectedUserId = userSelect.value;
+      const selectedPayment = paymentMethodSelect.value;
+
+      if(!selectedUserId) {
+        alert('Por favor, seleccione un usuario registrado.');
+        return;
+      }
+      if(!selectedPayment) {
+        alert('Por favor, seleccione un método de pago.');
+        return;
+      }
+
+      const user = users.find(u => u.id === selectedUserId);
+      if(!user) {
+        alert('Usuario no encontrado.');
+        return;
+      }
+
+      // Simulate payment and exit confirmation
+      confirmationMessage.textContent = `El usuario ${user.name} ha realizado el pago mediante "${selectedPayment}" y ha salido del parqueadero. ¡Gracias por su visita!`;
+
+      // Optionally reset form or disable inputs after payment
+      form.reset();
+      userSelect.focus();
+    });
+  </script>
+</body>
+</html>
+

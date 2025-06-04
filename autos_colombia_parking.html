@@ -4,7 +4,191 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <title>Autos Colombia - Gestión Parqueadero</title>
-<link rel="stylesheet" href="css/styles_1.css" />
+<style>
+  /* Reset and base */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #4a90e2 0%, #50e3c2 100%);
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #ccc;
+  }
+  header {
+    width: 100%;
+    background: #fff;
+    color: #4a90e2;
+    font-weight: 700;
+    padding: 1rem 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    text-align: center;
+    font-size: 1.3rem;
+    user-select: none;
+  }
+  nav {
+    display: flex;
+    justify-content: space-around;
+    background: #fff;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index:10;
+  }
+  nav button {
+    flex: 1;
+    padding: 0.6rem 0;
+    border:none;
+    background: transparent;
+    font-weight: 600;
+    color: #4a90e2;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 0.9rem;
+  }
+  nav button.active, nav button:hover {
+    background: #4a90e2;
+    color: white;
+  }
+  main {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    width: 100%;
+    background: white;
+    border-radius: 0 0 12px 12px;
+    max-height: 530px;
+  }
+  h2 {
+    color: #4a90e2;
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+    user-select: none;
+  }
+  label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  input[type=text], input[type=number], select, textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1.5px solid #4a90e2;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    outline-offset: 2px;
+    resize: vertical;
+  }
+  textarea {
+    min-height: 60px;
+  }
+  button.primary {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+  button.primary:hover {
+    background-color: #357ABD;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+  }
+  th, td {
+    border: 1px solid #4a90e2;
+    text-align: left;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.85rem;
+  }
+  th {
+    background-color: #4a90e2;
+    color: white;
+  }
+  small {
+    font-size: 0.75rem;
+    color: #666;
+  }
+  .scrollable {
+    max-height: 250px;
+    overflow-y: auto;
+    border: 1px solid #4a90e2;
+    border-radius: 8px;
+  }
+  .btn-link {
+    background: none;
+    border:none;
+    color: #4a90e2;
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding-left: 0;
+  }
+  .btn-danger {
+    background: #e94e4e;
+    color: white;
+    border-radius: 6px;
+    padding: 0.15rem 0.6rem;
+    font-weight: 700;
+  }
+  .flex-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .note {
+    font-style: italic;
+    color: #555;
+    font-size: 0.8rem;
+    margin-top: -0.5rem;
+    margin-bottom: 1rem;
+  }
+  /* Scrollbar style for better mobile UX */
+  main::-webkit-scrollbar {
+    width: 6px;
+  }
+  main::-webkit-scrollbar-thumb {
+    background-color: #4a90e2;
+    border-radius: 3px;
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 350px){
+    body {
+      border:none;
+      max-width: 100vw;
+    }
+    main {
+      max-height: 540px;
+      padding: 0.8rem;
+    }
+  }
+</style>
 </head>
 <body>
 <header>Autos Colombia - Gestion Parqueadero</header>
@@ -95,17 +279,6 @@
         <label for="exit-vehicle-plate">Seleccionar vehículo</label>
         <select id="exit-vehicle-plate" required>
           <option value="">Seleccione vehículo</option>
-        </select>
-        <label for="exit-payment-method">Seleccione Método de Pago</label>
-        <select id="exit-payment-method" required>
-          <option value="">Seleccione método</option>
-          <option value="Nequi">Billeteras electrónicas - Nequi</option>
-          <option value="PayPal">Billeteras electrónicas - PayPal</option>
-          <option value="Daviplata">Billeteras electrónicas - Daviplata</option>
-          <option value="Pagos móviles">Pagos móviles</option>
-          <option value="Efectivo">Efectivo</option>
-          <option value="Tarjeta débito">Tarjetas de débito</option>
-          <option value="Tarjeta crédito">Tarjetas de crédito</option>
         </select>
         <button class="primary" type="submit">Registrar Salida</button>
       </form>
@@ -313,7 +486,6 @@
   const vehiclesTableBody = document.querySelector('#vehicles-table tbody');
   const vehicleExitForm = document.getElementById('vehicle-exit-form');
   const exitVehiclePlateSelect = document.getElementById('exit-vehicle-plate');
-  const exitPaymentMethodSelect = document.getElementById('exit-payment-method');
 
   vehicleEntryForm.addEventListener('submit', e => {
     e.preventDefault();
@@ -328,7 +500,7 @@
       alert('El vehículo ya está registrado dentro del parqueadero.');
       return;
     }
-    // Validar celda disponible
+    // Check if cell is available
     const cell = data.cells.find(c => c.code === cellCode);
     if(!cell) {
       alert('Celda no encontrada');
@@ -344,8 +516,8 @@
     vehicleEntryForm.reset();
     updateVehiclesTable();
     updateVehicleExitSelect();
-    if(typeof populateNoveltyVehicleSelect === 'function') populateNoveltyVehicleSelect();
-    if(typeof updateCellsTable === 'function') updateCellsTable();
+    updateNoveltyVehicleSelect();
+    updateCellsTable();
   });
 
   function updateVehiclesTable() {
@@ -357,7 +529,6 @@
       vehiclesTableBody.appendChild(tr);
     });
   }
-
   function populateVehicleEntrySelects() {
     // Users
     vehicleUserSelect.innerHTML = `<option value="">Seleccione un usuario</option>`;
@@ -370,7 +541,6 @@
       vehicleCellSelect.innerHTML += `<option value="${c.code}">${c.code} - ${c.description || ''}</option>`;
     });
   }
-
   function populateVehicleExitSelect() {
     exitVehiclePlateSelect.innerHTML = `<option value="">Seleccione vehículo</option>`;
     data.vehicles.forEach(v => {
@@ -381,70 +551,32 @@
   vehicleExitForm.addEventListener('submit', e => {
     e.preventDefault();
     const plate = exitVehiclePlateSelect.value;
-    const paymentMethod = exitPaymentMethodSelect.value;
-    if (!plate) {
+    if(!plate) {
       alert('Seleccione un vehículo para registrar la salida');
       return;
     }
-    if (!paymentMethod) {
-      alert('Seleccione un método de pago para registrar la salida');
-      return;
-    }
-    registerVehicleExit(plate, paymentMethod);
+    registerVehicleExit(plate);
     vehicleExitForm.reset();
-    exitPaymentMethodSelect.selectedIndex = 0;
   });
 
-  window.registerVehicleExit = function(plate, paymentMethod) {
+  window.registerVehicleExit = function(plate) {
     const vehicleIndex = data.vehicles.findIndex(v => v.plate === plate);
     if(vehicleIndex === -1) {
       alert('Vehículo no encontrado en parqueadero');
       return;
     }
-    const vehicle = data.vehicles[vehicleIndex];
-
-    // Calcular duración en parqueadero
-    const entryTime = new Date(vehicle.entryTime);
-    const exitTime = new Date();
-    const durationMs = exitTime - entryTime;
-
-    // Liberar celda
-    const cellCode = vehicle.cellCode;
+    // Free the cell
+    const cellCode = data.vehicles[vehicleIndex].cellCode;
     const cell = data.cells.find(c => c.code === cellCode);
     if(cell) {
       cell.occupied = false;
     }
-    // Eliminar vehículo del array
     data.vehicles.splice(vehicleIndex, 1);
     updateVehiclesTable();
     updateVehicleExitSelect();
-    if(typeof populateNoveltyVehicleSelect === 'function') populateNoveltyVehicleSelect();
-    if(typeof updateCellsTable === 'function') updateCellsTable();
-
-    const user = data.users.find(u => u.id === vehicle.userId);
-    const userName = user ? user.name : 'Desconocido';
-
-    // Mostrar confirmación con pago y duración
-    alert(`El vehículo ${plate} del usuario ${userName} ha salido del parqueadero.\n` +
-          `Método de pago utilizado: ${paymentMethod}.\n` +
-          `Tiempo en parqueadero: ${getDurationString(durationMs)}.`);
+    updateNoveltyVehicleSelect();
+    updateCellsTable();
   };
-
-  function getDurationString(durationMs) {
-    const totalMinutes = Math.floor(durationMs / 60000);
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
-    let result = '';
-    if (hours > 0) {
-      result += `${hours} ${hours === 1 ? 'hora' : 'horas'}`;
-    }
-    if (minutes > 0) {
-      if (result) result += ' y ';
-      result += `${minutes} ${minutes === 1 ? 'minuto' : 'minutos'}`;
-    }
-    if (!result) result = 'menos de un minuto';
-    return result;
-  }
 
   // NOVELTY MANAGEMENT
   const noveltyForm = document.getElementById('novelty-form');
@@ -550,4 +682,3 @@
 </script>
 </body>
 </html>
-

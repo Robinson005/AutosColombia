@@ -29,13 +29,22 @@ function populatePaymentUserSelect() {
 
 function updatePaymentsTable() {
   paymentsTableBody.innerHTML = '';
-  data.payments.forEach(p => {
+  data.payments.forEach((p, index) => {
     const user = data.users.find(u => u.id === p.userId);
     const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${user ? user.name : 'Desconocido'}</td><td>${p.amount.toLocaleString('es-CO', {style:'currency', currency:'COP'})}</td><td>${formatDate(new Date(p.time))}</td>`;
+    tr.innerHTML = `<td>${user ? user.name : 'Desconocido'}</td>
+                    <td>${p.amount.toLocaleString('es-CO', {style:'currency', currency:'COP'})}</td>
+                    <td>${formatDate(new Date(p.time))}</td>
+                    <td><button class="btn-danger" onclick="deletePayment(${index})">Eliminar</button></td>`;
     paymentsTableBody.appendChild(tr);
   });
 }
+
+// Función para eliminación de un pago
+window.deletePayment = function(index) {
+  data.payments.splice(index, 1);
+  updatePaymentsTable();
+};
 
 function formatDate(date) {
   return date.toLocaleString('es-CO', { dateStyle: 'short', timeStyle: 'short' });
